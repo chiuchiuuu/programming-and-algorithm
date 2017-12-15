@@ -35,13 +35,13 @@
 #include <iostream>
 using namespace std;
 
-void update(int n, char a[101][101]);
+void update(int n, char a[100][100]);
 
 int main()
 {
 	int n = 0;
 	cin >> n;
-	char a[101][101];
+	char a[100][100];
 	for (int i = 0; i < n; i++)
 	{
 		for (int j = 0; j < n; j++)
@@ -73,9 +73,9 @@ int main()
 	return 0;
 }
 
-void update(int n, char a[101][101])
+void update(int n, char a[100][100])
 {
-	char newA[101][101];
+	char newA[100][100];
 	for (int i = 0; i < n; i++)
 	{
 		for (int j = 0; j < n; j++)
@@ -84,9 +84,9 @@ void update(int n, char a[101][101])
 			if (a[i][j] == '.')
 			{
 				if ((a[i][j - 1] == '@' && j - 1 >= 0) ||
-					(a[i][j + 1] == '@' && j + 1 <= n) ||
+					(a[i][j + 1] == '@' && j + 1 < n) ||
 					(a[i - 1][j] == '@' && i - 1 >= 0) ||
-					(a[i + 1][j] == '@' && i + 1 <= n))
+					(a[i + 1][j] == '@' && i + 1 < n))
 				{
 					newA[i][j] = '@';
 				}
