@@ -30,3 +30,18 @@ int mian()
 ## 二维数组
 
 概念部分见PPT，很重要！
+
+## 指向二维数组的指针
+
+```c++
+int main()
+{
+	int a[3][4] = {...};
+  	int (*p)[4], i, j;
+  	p = a;
+  	cin >> i >> j;
+  	cout << setw(4) << *(*(p+i)+j); // a[i][j]
+  	return 0;
+}
+```
+
