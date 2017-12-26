@@ -385,7 +385,7 @@ int main() {
 ### 后置运算符作为二元运算符重载 
 
 - 多写一个参数, 无具体意义 
--  重载为成员函数：
+- 重载为成员函数：
   - `T operator++(int); `
   - `T operator--(int); `
 - 重载为全局函数：
@@ -470,7 +470,7 @@ int main() {
 
 
 
-```
+```c++
 #include <iostream>
 #include <cstring>
 using namespace std;
