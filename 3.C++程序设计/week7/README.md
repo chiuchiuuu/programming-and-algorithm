@@ -477,10 +477,6 @@ cout << f4 << endl << f5 << endl;
 - `data()`：`const char *p = str.data()`
 - `copy()`
 
-```c++
-
-```
-
 ### 其他特性
 
 - 成员函数 `capacity()` ：返回无需增加内存即可存放的字符数
