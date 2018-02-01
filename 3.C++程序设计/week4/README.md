@@ -15,7 +15,7 @@
 运算符重载的实质是函数重载，参数个数为运算符目数
 
 ```c++
-返回值类型 operator 运算符（形参表）
+返回值类型 operator 运算符(形参表)
 {
 	…… 
 }
@@ -379,7 +379,7 @@ int main() {
   - `T & operator--();`
 - 重载为全局函数： 
   - `T & operator++(T &);` 
-  - `T & operator—(T &);`
+  - `T & operator—-(T &);`
 - `++obj`, `obj.operator++()`, `operator++(obj)` 都调用上述函数
 
 ### 后置运算符作为二元运算符重载 
@@ -470,34 +470,6 @@ int main() {
 
 
 
-```c++
-#include <iostream>
-#include <cstring>
-using namespace std;
-// 在此处补充你的代码
-int main() {
-    Array2 a(3,4);
-    int i,j;
-    for( i = 0;i < 3; ++i )
-        for( j = 0; j < 4; j ++ )
-            a[i][j] = i * 4 + j;
-    for( i = 0;i < 3; ++i ) {
-        for( j = 0; j < 4; j ++ ) {
-            cout << a(i,j) << ",";
-        }
-        cout << endl;
-    }
-    cout << "next" << endl;
-    Array2 b; b = a;
-    for( i = 0;i < 3; ++i ) {
-        for( j = 0; j < 4; j ++ ) {
-            cout << b[i][j] << ",";
-        }
-        cout << endl;
-    }
-    return 0;
-}
-```
 
 
 

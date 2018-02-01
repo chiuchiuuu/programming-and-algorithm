@@ -52,8 +52,8 @@ void qsort(void *base, int nelem, unsigned int width, int (*pfCompare)(const voi
 int 比较函数名(const void *elem1, const void *elem2);
 ```
 
-- `*elem1` 拍前则返回负整数
-- `*elem2` 拍前则返回正整数
+- `*elem1` 排前则返回负整数
+- `*elem2` 排前则返回正整数
 - 都可以则返回0
 
 示例：
@@ -67,7 +67,7 @@ int MyCompare(const void * elem1, const void * elem2)
 	unsigned int *p1, *p2;
   	p1 = (unsigned int *)elem1;
   	p2 = (unsigned int *)elem2;
-  	return (*p1 % 10) - (*p2 * 10)
+  	return (*p1 % 10) - (*p2 % 10)
 }
 
 int main()
@@ -219,7 +219,7 @@ r = 200; // error
 
 ## 内联函数
 
-函数调用是有时间开销的（参数入栈，返回地址）。如果函数本身只有几条语 句，执行非常快，而且函数被反复执行很多次，相比 之下调用函数所产生的这个开销就会显得比较大。
+函数调用是有时间开销的（参数入栈，返回地址）。如果函数本身只有几条语句，执行非常快，而且函数被反复执行很多次，相比之下调用函数所产生的这个开销就会显得比较大。
 
 为了减少函数调用的开销，引入了**内联函数机制**。编译器处理对内联函数的调用语句时，是将整个函数的代码插入到调用语句处，而不会产生调用函数的语句。
 
@@ -229,7 +229,7 @@ r = 200; // error
 inline int Max(int a, int b);
 ```
 
-弊端：函数体积增大
+弊端：主函数体积增大
 
 
 

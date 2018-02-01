@@ -889,9 +889,9 @@ pair<FwdIt, FwdIt> equal_range(FwdIt first, FwdIt last, const T& val);
 - 要求[first,last)是有序的
 - 返回值是一个pair, 假设为 p, 则：
   -  [first,p.first) 中的元素都比 val 小
-  - [p.second,last)中的所有元素都比 val 大
-  - p.first 就是lower_bound的结果 
-  - p.last 就是 upper_bound的结果
+  -  [p.second,last)中的所有元素都比 val 大
+  -  p.first 就是lower_bound的结果 
+  -  p.last 就是 upper_bound的结果
 
 ### merge
 
