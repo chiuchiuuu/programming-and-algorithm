@@ -23,7 +23,7 @@ int main()
         {
             r--;
         }
-        else if (!leftIsOdd and !rightIsEven)
+        else if (!leftIsOdd && !rightIsEven)
         {
             int temp = a[l];
             a[l] = a[r];

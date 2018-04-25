@@ -22,10 +22,6 @@
 
 一个元素一行
 
-![img](https://d3c33hcgiwev3.cloudfront.net/50JOQxnnEeW4giIAC5XN5A_fb79d5ef3917cf5bb7b71d1aade05536_Bubble-sort.gif?Expires=1513382400&Signature=kikiCmnxuqFJ60p8GL6WgMWuWltgnfVbnUWO~DNCZDvPxUn-BJFuPBcmsgZVWz8uZ1RZWhx1Wk701hDC5tgJs6Ygpw4Fhh~qLgUa4zFbn7bBTI3mk5Osk1o6vq8j7QrGA2XfBd6exkfr4xKVoksoIIv8cnTllJrc~0drKFgIxx0_&Key-Pair-Id=APKAJLTNE6QMUY6HBC5A)
-
-冒泡排序的原理
-
 ### 样例输入
 
 ```

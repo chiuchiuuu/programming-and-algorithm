@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 using namespace std;
 
 int main()
@@ -12,7 +12,7 @@ int main()
 		cin >> x;
 		while (x > 0)
 		{
-			ans += x % 2; // ģ2ȡ��
+			ans += x % 2; // 模2取余
 			x /= 2;
 		}
 		cout << ans << endl;
