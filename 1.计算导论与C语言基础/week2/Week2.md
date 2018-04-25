@@ -2,15 +2,15 @@
 
 ### 历史上的计算设备
 
-![img](/img/8.png)
+![img](../img/8.png)
 
 差分机
 
-![img](/img/10.png)
+![img](../img/10.png)
 
 制表机
 
-![img](/img/11.png)
+![img](../img/11.png)
 
 第一台电子计算机：ENIAC
 
@@ -18,21 +18,21 @@ EDVAC是世界上第一台存储程序计算机，是所有现代计算机的原
 
 ### 从电子管到云计算
 
-![img](/img/12.png)
+![img](../img/12.png)
 
-![img](/img/13.png)
+![img](../img/13.png)
 
-![img](/img/14.png)
+![img](../img/14.png)
 
-![img](/img/15.png)
+![img](../img/15.png)
 
-![img](/img/16.png)
+![img](../img/16.png)
 
-![img](/img/17.png)
+![img](../img/17.png)
 
-![img](/img/18.png)
+![img](../img/18.png)
 
-![img](/img/19.png)
+![img](../img/19.png)
 
 新型计算模式——云计算
 
@@ -48,7 +48,7 @@ EDVAC是世界上第一台存储程序计算机，是所有现代计算机的原
 
 #### 量子计算机的基本原理
 
-![img](/img/20.png)
+![img](../img/20.png)
 
 经典计算：
 
@@ -62,5 +62,5 @@ EDVAC是世界上第一台存储程序计算机，是所有现代计算机的原
 - n比特同时存储$2^n$个数
 - 同时接受$2^n$个输入数据，同时完成$2^n$次运算，输出$2^n$个结果
 
-![img](/img/21.png)
+![img](../img/21.png)
 
