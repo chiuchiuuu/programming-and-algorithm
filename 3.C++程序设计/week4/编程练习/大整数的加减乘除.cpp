@@ -6,15 +6,15 @@ using namespace std;
 class BigInt
 {
 private:
-	string num;
-	char sign;
+	string num;			// 数值
+	char sign;			// 正负
 public:
-	BigInt(string n = "0");
-	BigInt operator+(const BigInt &bi);
-	BigInt operator-(const BigInt &bi);
-	BigInt operator*(const BigInt &bi);
-	BigInt operator/(const BigInt &bi);
-	friend ostream& operator<<(ostream &o, const BigInt &b);
+	BigInt(string n = "0");					// 构造函数，缺省为0
+	BigInt operator+(const BigInt &bi);		// 大整数加法
+	BigInt operator-(const BigInt &bi);		// 大整数减法
+	BigInt operator*(const BigInt &bi);		// 大整数乘法
+	BigInt operator/(const BigInt &bi);		// 大整数除法
+	friend ostream& operator<<(ostream &o, const BigInt &b);		// 大整数输出
 };
 
 BigInt::BigInt(string n)
