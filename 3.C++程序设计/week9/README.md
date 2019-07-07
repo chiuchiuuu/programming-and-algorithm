@@ -745,7 +745,7 @@ class My_ostream_iterator :public iterator<output_iterator_tag, T>
 {
 private:
 	string sep; // 分隔符，即*
-	ostream &os; // 有些ostream对象的无参构造函数是私有的，所以用引用比较方便
+	ostream &os; // 有些ostream对象的无参构造函数是私有的
 public:
 	My_ostream_iterator(ostream &o, string s) :sep(s), os(o) {}
 	void operator++() {};//++只需要有定义即可
@@ -782,79 +782,11 @@ My_ostream_itreator<int>copy(int *_F, int *_L, My_ostream_iterator<int> _X){
         *_X=*_F;//重载* 和 =
     //可以通过重载，使得_F得到输出
     //*重载之后，可以认为是一个函数，而一个函数调用可以出现在=左边，则说明其返回值是一个引用；
-    //引用X自己。此时可以相当于x.operator=(*F)
+    //引用x自己。此时可以相当于x.operator=(*F)
    	return (_X);
 }
 //注意a是int *类型
 ```
-
-
-
-
-
-#### 变值算法示例
-
-```c++
-#include <iostream>
-#include <vector>
-#include <numeric>
-#include <list>
-#include <algorithm>
-#include <iterator>
-using namespace std;
-
-class LessThen9
-{
-public:
-	bool operator()(int n)
-	{
-		return n < 9;
-	}
-};
-
-void ouputSquare(int value)
-{
-	cout << value * value << " ";
-}
-
-int calculateCube(int value)
-{
-	return value * value * value;
-}
-
-int main()
-{
-	const int SIZE = 10;
-	int a1[] = { 1,2,3,4,5,6,7,8,9,10 };
-	int a2[] = { 100,2,8,1,50,3,8,9,10,2 };
-	vector<int> v(a1, a1 + SIZE);
-	ostream_iterator<int> output(cout, " ");
-	random_shuffle(v.begin(), v.end());  // 随机变换顺序（伪随机）
-	cout << endl << "1)";
-	copy(v.begin(), v.end(), output);  // 相当于做一串输出
-	copy(a2, a2 + SIZE, v.begin());
-	cout << endl << "2)";
-	cout << count(v.begin(), v.end(), 8);
-	cout << endl << "3)";
-	cout << count_if(v.begin(), v.end(), LessThen9());
-	cout << endl << "4)";
-	cout << *(min_element(v.begin(), v.end()));
-	cout << endl << "5)";
-	cout << *(max_element(v.begin(), v.end()));
-	cout << endl << "6)";
-	cout << accumulate(v.begin(), v.end(), 0);  // 求和
-	cout << endl << "7)";
-	for_each(v.begin(), v.end(), ouputSquare);
-	vector<int> cubes(SIZE);
-	transform(a1, a1 + SIZE, cubes.begin(), calculateCube);
-	cout << endl << "8)";
-	copy(cubes.begin(), cubes.end(), output);
-	return 0;
-}
-```
-
-- `ostream_iterator<int> output(cout ,“ ”); `定义了一个 `ostream_iterator<int>` 对象, 可以通过`cout`输出以 “ ”(空格) 分隔的一个个整数
-- `copy (v.begin(), v.end(), output);` 导致v的内容在 `cout`上输出
 
 
 
@@ -864,8 +796,7 @@ int main()
 - **删除不会使容器里的元素减少**
   - 将所有应该被删除的元素看做空位子
   - 用留下的元素从后往前移, 依次去填空位子
-  - 元素往前移后, 它原来的位置也就算是空位子 
-  - 也应由后面的留下的元素来填上
+  - 元素往前移后, 它原来的位置也就算是空位子也应由后面的留下的元素来填上
   - 最后, 没有被填上的空位子, 维持其原来的值不变
 - 删除算法不应作用于关联容器
 
@@ -879,6 +810,26 @@ int main()
 | unique_copy    | 拷贝区间到另一个区间. 连续相等的元素, 只拷贝第一个到目 标区间 (可自定义比较器) |
 
 - 复杂度都是 $O(n)$
+
+```cpp
+int main() {
+	int a[5] = { 1,2,3,2,5 };
+	int b[6] = { 1,2,3,2,5,6 };
+	ostream_iterator<int> oit(cout, ",");
+	int * p = remove(a, a + 5, 2);
+	cout << "1) "; copy(a, a + 5, oit); cout << endl; //输出 1) 1,3,5,2,5,
+	cout << "2) " << p - a << endl; //输出 2) 3
+	vector<int> v(b, b + 6);
+	remove(v.begin(), v.end(), 2);
+	cout << "3) "; copy(v.begin(), v.end(), oit); cout << endl;
+	//输出 3) 1,3,5,6,5,6,
+	cout << "4) "; cout << v.size() << endl;
+	//v中的元素没有减少,输出 4) 6
+	return 0;
+}
+```
+
+
 
 #### unique
 
@@ -908,19 +859,19 @@ FwdIt unique(FwdIt first, FwdIt last, Pred pr);
 
 - 变序算法改变容器中元素的顺序
 - 但是不改变元素的值
-- 变序算法不适用于关联容器
-- 算法复杂度都是 $O(n)$的
+- 变序算法不适用于**关联容器**
+- 算法复杂度大部分都是 $O(n)$的
 
-| 算法             | 功能                                                         |
-| ---------------- | ------------------------------------------------------------ |
-| reverse          | 颠倒区间的前后次序                                           |
-| reverse_copy     | 把一个区间颠倒后的结果拷贝到另一个区间， 源区间不变          |
-| rotate           | 将区间进行循环左移                                           |
-| rotate_copy      | 将区间以首尾相接的形式进行旋转后的结果 拷贝到另一个区间，源区间不变 |
-| next_permutation | 将区间改为下一个排列(可自定义比较器)                         |
-| prev_permutation | 将区间改为上一个排列(可自定义比较器)                         |
-| random_shuffle   | 随机打乱区间内元素的顺序                                     |
-| partition        | 把区间内满足某个条件的元素移到前面，不满足该 条件的移到后面  |
+| 算法                 | 功能                                                         |
+| -------------------- | ------------------------------------------------------------ |
+| reverse              | 颠倒区间的前后次序                                           |
+| reverse_copy         | 把一个区间颠倒后的结果拷贝到另一个区间， 源区间不变          |
+| rotate               | 将区间进行循环左移                                           |
+| rotate_copy          | 将区间以首尾相接的形式进行旋转后的结果 拷贝到另一个区间，源区间不变 |
+| **next_permutation** | 将区间改为下一个排列(可自定义比较器)                         |
+| **prev_permutation** | 将区间改为上一个排列(可自定义比较器)                         |
+| **random_shuffle**   | 随机打乱区间内元素的顺序                                     |
+| partition            | 把区间内满足某个条件的元素移到前面，不满足该 条件的移到后面  |
 
 #### stable_partition
 
@@ -963,7 +914,7 @@ bool next_permutaion (Init first,Init last);
 
 示例
 
-```c++
+```cpp
 #include <iostream>
 #include <algorithm>
 #include <string>
@@ -973,9 +924,9 @@ int main()
 {
 	string str = "231";
 	char szStr[] = "324";
-	while (next_permutation(str.begin(), str.end()))
+	while (next_permutation(str.begin(), str.end()))//参数为起点，终点
 	{
-		cout << str << endl;
+		cout << str << endl;//312，321
 	}
 	cout << "****" << endl;
 	while (next_permutation(szStr, szStr + 3))
@@ -992,13 +943,30 @@ int main()
 }
 ```
 
+`next_permutation`不单单可以用在数字上，也可以用在自定义的数据类型上。
+
+```cpp
+using namespace std;
+int main() {
+	int a[] = {8,7,10};
+	list<int>ls(a, a + 3);
+	while (next_permutation(ls.begin(), ls.end())) {
+		list<int>::iterator i;
+		for (i + ls.begin; i != ls.end(); i++) {
+			cout << *i << " ";
+			cout << endl;
+		}
+	}
+}
+```
+
 
 
 ### 排序算法
 
 - 比前面的变序算法复杂度更高, 一般是 $O(n\log(n))$ 
 - 排序算法需要随机访问迭代器的支持 
-- 不适用于关联容器和list
+- 不适用于关联容器和`list`(`list`是双向迭代器,要使用`list::sort`)
 
 | 算法              | 功能                                                         |
 | ----------------- | ------------------------------------------------------------ |
@@ -1022,7 +990,7 @@ void sort(RanIt first, RanIt last);
 ```
 
 - 按升序排序
-- 判断x是否应比y靠前, 就看 x < y 是否为true
+- 没有自定义比较器时，判断x是否应比y靠前, 就看 x < y 是否为true
 
 原型2
 
@@ -1032,18 +1000,62 @@ void sort(RanIt first, RanIt last, Pred pr);
 ```
 
 - 按升序排序
-- 判断x是否应比y靠前, 就看 `pr(x,y)`是否为true
+- 判断x是否应比y靠前, 就看 `pr(x,y)`是否为true，此时`pr`为函数对象或函数指针
 
 sort 实际上是快速排序, 时间复杂度 $O(n\log(n)) $
 
 - 平均性能最优 
-- 但是最坏的情况下, 性能可能非常差
+- 但是最坏的情况下, 性能可能非常差$O(n^2)$
 
 如果要保证 “最坏情况下” 的性能, 那么可以使用 `stable_sort `
 
 - `stable_sort `实际上是归并排序, 特点是能保持相等元素之间的先后次序
 - 在有足够存储空间的情况下, 复杂度为 $n\log(n)$, 否则复杂度为 $n\log(n)\log(n)$
 - `stable_sort` 用法和 `sort`相同。
+
+```cpp
+#include<algorithm>
+#include<iostream>
+#include<string>
+
+using namespace std;
+class MyLess {
+public:
+	bool operator() (int n1, int n2) {
+		return (n1 % 10) < (n2 % 10);
+	}
+};
+class MyGreater {
+public:
+	bool operator() (int n1, int n2) {
+		return n1 > n2;
+	}
+};
+int main() {
+	int a[] = { 14,2,9,111,78 };
+	sort(a, a + 5, MyLess());
+	int i;
+	for (i = 0; i < 5; i++) {
+		cout << a[i] << " ";
+	}
+	cout << endl;
+	sort(a, a + 5, greater<int>());
+	for (i = 0; i < 5; i++)
+		cout << a[i] << " ";
+	cout<<endl;
+	sort(a,a+5,MyGreater());
+	for (i = 0; i < 5; i++)
+		cout << a[i] << " ";
+}
+```
+
+输出结果如下：
+
+```cpp
+111 2 14 78 9 //按个位数比大小
+111 78 14 9 2 //系统自带greater
+111 78 14 9 2 //自己定义greater
+```
 
 
 
@@ -1053,24 +1065,24 @@ sort 实际上是快速排序, 时间复杂度 $O(n\log(n)) $
 - 需要随机访问迭代器的支持
 - 有序区间算法不能用于关联容器和list
 
-| 算法                     | 功能                                           |
-| ------------------------ | ---------------------------------------------- |
-| binary_search            | 判断区间中是否包含某个元素                     |
-| includes                 | 判断是否一个区间中的每个元素，都在另一个区间中 |
-| lower_bound              | 查找最后一个不小于某值的元素的位置             |
-| upper_bound              | 查找第一个大于某值的元素的位置                 |
-| equal_range              | 同时获取lower_bound和upper_bound               |
-| merge                    | 合并两个有序区间到第三个区间                   |
-| set_union                | 将两个有序区间的并拷贝到第三个区间             |
-| set_intersection         | 将两个有序区间的交拷贝到第三个区间             |
-| set_difference           | 将两个有序区间的差拷贝到第三个区间             |
-| set_symmetric_difference | 将两个有序区间的对称差拷贝到第三个区间         |
-| inplace_merge            | 将两个连续的有序区间原地合并为一个有序区间     |
+| 算法                     | 功能                                                         |
+| ------------------------ | ------------------------------------------------------------ |
+| binary_search            | 判断区间中是否包含某个元素<br />此处的相等是`==`，体现在程序里是x<y,y<x同时不成立 |
+| includes                 | 判断是否一个区间中的每个元素，都在另一个区间中               |
+| lower_bound              | 查找最后一个不小于某值的元素的位置                           |
+| upper_bound              | 查找第一个大于某值的元素的位置                               |
+| equal_range              | 同时获取lower_bound和upper_bound                             |
+| merge                    | 合并两个有序区间到第三个区间                                 |
+| set_union                | 将两个有序区间的并拷贝到第三个区间，允许有重复元素           |
+| set_intersection         | 将两个有序区间的交拷贝到第三个区间                           |
+| set_difference           | 将两个有序区间的差拷贝到第三个区间                           |
+| set_symmetric_difference | 将两个有序区间的对称差拷贝到第三个区间$A\or B-A\and B$       |
+| inplace_merge            | 将两个连续的有序区间原地合并为一个有序区间                   |
 
 #### binary_search
 
 - 折半查找
-- 要求容器已经有序且支持随机访问迭代器, 返回是否找到
+- 要求容器已经有序且支持随机访问迭代器, 返回是否找到`bool`
 
 原型1
 
@@ -1129,7 +1141,7 @@ OutIt merge(InIt1 first1, InIt1 last1, InIt2 first2, InIt2 last2, OutIt x);
 
 原型2
 
-```c++
+```cpp
 template<class InIt1, class InIt2, class OutIt, class Pred>
 OutIt merge(InIt1 first1, InIt1 last1, InIt2 first2, InIt2 last2, OutIt x, Pred pr);
 ```
@@ -1138,15 +1150,20 @@ OutIt merge(InIt1 first1, InIt1 last1, InIt2 first2, InIt2 last2, OutIt x, Pred 
 
 #### includes
 
-```c++
+```cpp
 template<class InIt1, class InIt2> 
 bool includes(InIt1 first1, InIt1 last1, InIt2 first2, InIt2 last2);
 ```
 
-```c++
+```cpp
 template<class InIt1, class InIt2, class Pred> 
 bool includes(InIt1 first1, InIt1 last1, InIt2 first2, InIt2 last2, Pred pr);
 ```
+
+判断[First2, last2)中的每个元素，是否都在[First1,last1)中：
+
+- 第一个用`<`作为比较器，x<y,y<x都不成立
+- 第二个用pr, pr(x,y)==true说明x,y相等
 
 #### set_difference
 
@@ -1190,5 +1207,3 @@ class bitset
 - `bitset<40> bst;`
 - `bst`是一个由40位组成的对象 
 - 用bitset的函数可以方便地访问任何一位
-
-众多成员函数见PPT
