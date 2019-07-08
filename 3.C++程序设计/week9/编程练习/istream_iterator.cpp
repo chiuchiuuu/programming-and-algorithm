@@ -4,26 +4,23 @@ using namespace std;
 
 // 在此处补充你的代码
 template<class T>
-class CMyistream_iterator
-{
+class  CMyistream_iterator : public iterator<input_iterator_tag, T> {
 private:
-	T content;
-	istream &is;
+	T n;
+	istream & os;
 public:
-	CMyistream_iterator(istream &i):is(i)
-	{
-		i >> content;
+	CMyistream_iterator(istream &os) : os(os) {
+		os >> n;
 	}
-	T operator*()
-	{
-		return content;
+	T operator*() {
+		return n;
 	}
-	void operator++(int)
-	{
-		is >> content;
+	void operator++(int) {
+		os >> n;
 	}
-};
+	//构造函数执行过程中就会要求输入，然后每次执行++，则读取输入流中的下一个项目，执行 * 则返回上次从输入流中读取的项目
 
+};
 int main()
 {
 	CMyistream_iterator<int> inputInt(cin);
