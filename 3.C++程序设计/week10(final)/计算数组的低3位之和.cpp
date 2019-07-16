@@ -11,6 +11,8 @@ struct CMy_add
 	void operator()(int val)
 	{
 		sum += (val & 7);
+		//sum = sum + (val & 7); 
+		//注意按位与优先级低于加法！
 	}
 };
 

@@ -13,7 +13,7 @@
 
 例：以学生为基类，派生出研究生，大学生，中学生这些子类。
 
-```c++
+```cpp
 class 派生类名: public 基类名
 {
 	...
@@ -46,7 +46,7 @@ class 派生类名: public 基类名
 
 例一：”圆“类包含”点“类，这是圆和点就是复合关系
 
-```c++
+```cpp
 class Circle
 {
   	double radius;
@@ -56,7 +56,7 @@ class Circle
 
 例二：人狗关系！最好的写法是互相指向
 
-```c++
+```cpp
 class Master;
 
 class Dog
@@ -102,7 +102,7 @@ class Master
 
 例：
 
-```c++
+```cpp
 class  Father 
 {
 private: 
@@ -148,7 +148,7 @@ int main()
 
 ### 初始化参数列表
 
-```c++
+```cpp
 构造函数名（形参表）：基类名（基类构造函数实参表）
 {
 	...
@@ -180,7 +180,7 @@ int main()
 
 **析构函数的调用顺序与构造函数的调用顺序相反**
 
-```c++
+```cpp
 class Base
 {
 public:
@@ -225,7 +225,7 @@ int main()
 
 ## public继承的赋值兼容规则
 
-```c++
+```cpp
 class base {};
 class derived : public base {};
 base b;
@@ -241,3 +241,7 @@ derived d;
 ## 直接基类和间接基类
 
 在声明派生类时，只需要列出它的直接基类，派生类沿着类的层次自动向上继承它的间接基类
+
+## Reference
+
+https://www.coursera.org/learn/cpp-chengxu-sheji/supplement/JYzTL/ke-cheng-slides
