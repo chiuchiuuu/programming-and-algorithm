@@ -76,78 +76,62 @@
 
 ### 解答程序
 
-```c++
-#include <iostream>
+```cpp
+#include<stdio.h>
+#include<iostream>
 using namespace std;
-
 int puzzle[6][8], press[6][8];
 
-// 初始化数组和处理输入
-void init()
-{
-	for (int i = 1; i < 6; i++)
-	{
-		for (int j = 1; j < 7; j++)
-		{
+void init() {
+	for (int i = 1; i < 6; i++) {
+		for (int j = 1; j < 6; j++) {
 			cin >> puzzle[i][j];
 		}
 	}
-	for (int j = 0; j < 8; j++)
-	{
-		press[0][j] = 0;
-	}
-	for (int i = 0; i < 6; i++)
-	{
+	for (int i = 0; i < 6; i++) {
 		press[i][0] = 0;
 		press[i][7] = 0;
 	}
-}
-
-// 验证答案是否正确，主要验证最后一行
-bool guess()
-{
-	for (int j = 1; j < 7; j++)
-	{
-		if ((press[5][j - 1] + press[5][j] + press[5][j + 1] + press[4][j]) % 2 != puzzle[5][j])
-			return false;
+	for (int i = 0; i < 8; i++) {
+		press[0][i] = 0;
 	}
-	return true;
+}
+bool guess() {
+	for (int c = 1; c < 7; c++) {
+		if ((press[5][c - 1] + press[5][c] + press[5][c + 1] + press[4][c]) % 2 != puzzle[5][c]) {
+			return false;
+		}
+		return true;
+	}
 }
 
-// 根据第一行的枚举更新剩余几行
-void update()
-{
+void update(){
 	for (int i = 1; i < 5; i++)
-	{
-		for (int j = 1; j < 7; j++)
 		{
-			press[i + 1][j] = (puzzle[i][j] + press[i][j] + press[i][j - 1] + press[i][j + 1] + press[i - 1][j]) % 2;
+		for (int j = 1; j < 7; j++)
+			{
+				press[i + 1][j] = (puzzle[i][j] + press[i][j] + press[i][j - 1] + press[i][j + 1] + press[i - 1][j]) % 2;
+			}
 		}
 	}
-}
 
-// 枚举第一行的所有情况，直到得出答案
-void enumerate()
-{
-	// 初始情况
-	for (int j = 1; j < 7; j++)
-	{
+void enmuerate() {
+	for (int j = 1; j < 7; j++) {
 		press[1][j] = 0;
 	}
 	update();
 	while (!guess())
 	{
 		press[1][1]++;
-		int i = 1;
-		while (press[1][i] > 1) // 进位
-		{
-			press[1][i] = 0;
-			press[1][++i]++;
+		int c = 1;
+		while (press[1][c] > 1) {
+			press[1][c] = 0;
+			press[1][++c] ++;
 		}
 		update();
 	}
+	
 }
-
 int main()
 {
 	int ncase;
@@ -156,8 +140,7 @@ int main()
 	{
 		cout << "PUZZLE #" << i + 1 << endl;
 		init();
-		enumerate();
-		// 输出结果
+		enmuerate();
 		for (int i = 1; i < 6; i++)
 		{
 			for (int j = 1; j < 7; j++)
@@ -191,7 +174,7 @@ int main()
 
 ### 样例输入
 
-```
+```cpp
 6 7
 14
 2 1
@@ -212,7 +195,7 @@ int main()
 
 ### 样例输出
 
-```
+```cpp
 7
 ```
 
@@ -234,7 +217,7 @@ int main()
 
 ### 解题程序
 
-```c++
+```cpp
 #include <iostream>
 #include <algorithm>
 using namespace std;

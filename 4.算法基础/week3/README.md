@@ -38,7 +38,7 @@
 - 找出递推公式
 - 找到递归终止条件
 
-注意事项: 由于函数的局部变量是存在栈上的，如果有体积大的局部变量（比如数组）而递归层次可能很深的情况下，也许会导致栈溢出。可以考虑使用全局数组或动态分配数组。
+注意事项: 由于函数的局部变量是存在栈上的，如果有体积大的局部变量（比如数组）而递归层次可能很深的情况下，也许会导致栈溢出。可以考虑使用**全局数组**或**动态分配**数组。
 
 
 
@@ -114,92 +114,80 @@ Pair 3: impossible.
 
 ### 解题程序
 
-```c++
-#include <iostream>
+```cpp
+#include<iostream>
+#include<memory.h>
+#define MAXIN 75
+char board[MAXIN + 2][MAXIN + 2];//define the board
+int minstep, width, height;
+int to[4][2] = { {0,1},{1,0},{0,-1},{-1,0} };
+//define the step motion
+bool mark[MAXIN + 2][MAXIN + 2];//set the mark to check whether this board has been explored
 using namespace std;
 
-char Board[77][77] = { 0 };
-bool Mark[77][77] = { 0 };
-int minstep;
-int width, height;
-int to[4][2] = { {0,-1},{0,1},{-1,0},{1,0} };
-
-void searchPath(int x, int y, int end_x, int end_y, int step, int dir)
-{
+void Search(int now_x, int now_y, int end_x, int end_y, int step, int f) {
+	//now_x, now_y: the current position
+	//end_x, end_y: the end position
+	//step: counter for how many steps have been used
+	//f: the direction from last step to (now_x, now_y)
 	if (step > minstep)
-	{
+		return;
+	if (now_x == end_x && now_y == end_y) {
+		// arrive the end point
+		if (minstep > step) {
+			minstep = step;
+		}
 		return;
 	}
-	if (x == end_x && y == end_y)
-	{
-		if (step < minstep)
-		{
-			minstep = step;
-			return;
-		}
-	}
-
-	for (int i = 0; i < 4; i++)
-	{
-		int new_x = x + to[i][0];
-		int new_y = y + to[i][1];
-		if ((new_x > -1 && new_x < width + 2 && new_y > -1 && new_y < height + 2)
-			&& ((Board[new_y][new_x] == ' ' && !Mark[new_y][new_x])
-				|| (Board[new_y][new_x] == 'x' && new_x == end_x && new_y == end_y)))
-		{
-			Mark[new_y][new_x] = true;
-			if (i == dir)
-			{
-				searchPath(new_x, new_y, end_x, end_y, step, i);
-			}
+	for (int i = 0; i < 4; i++) {
+		int x = now_x + to[i][0];
+		int y = now_y + to[i][1];
+		bool position_inside_board = (x > -1) && (x < width + 2) && (y > -1) && (y < height + 2);
+		bool step_noCard_noMark = (board[y][x] == ' ') && (mark[y][x] == false);
+		bool step_to_end = (y == end_y) && (x == end_x)&&(board[y][x]=='X');
+		if (position_inside_board && (step_noCard_noMark || step_to_end)) {
+			mark[y][x] = true;
+			//if the new position is suitable, then mark it as True
+			if (f == i)
+				Search(x, y, end_x, end_y, step, i);
 			else
-			{
-				searchPath(new_x, new_y, end_x, end_y, step + 1, i);
-			}
-			// 这条路径没搜到，撤回标记
-			Mark[new_y][new_x] = false;
+				Search(x, y, end_x, end_y, step + 1, i);
+			// if all the directions from this step are turn out to be unsuitable
+			mark[y][x] = false;
 		}
 	}
 }
-
-int main()
-{
-	while (cin >> width >> height)
-	{
-		if (!height && !height)
-		{
+int main() {
+	int Boardnum = 0;
+	while (cin >> width >> height) {
+		if (!height && !width) {
 			break;
 		}
-		// 输入Board
-		for (int i = 1; i <= height; i++)
-		{
+		Boardnum++;
+		for (int i = 0; i < height + 2; i++) {
+			board[i][0] = ' ';
+			board[i][width + 1] = ' ';
+		}
+		for (int i = 0; i < width + 2; i++) {
+			board[0][i] = ' ';
+			board[height + 1][i] = ' ';
+		}
+		for (int i = 1; i <= height; i++) {
 			cin.get();
-			for (int j = 1; j <= width; j++)
-			{
-				Board[i][j] = cin.get();
+			for (int j = 1; j <= width; j++) {
+				board[i][j] = cin.get();
 			}
 		}
-		// 处理Board边缘
-		for (int i = 0; i < height + 2; i++)
-		{
-			Board[i][0] = ' ';
-			Board[i][width + 1] = ' ';
-		}
-		for (int j = 0; j < width + 2; j++)
-		{
-			Board[0][j] = ' ';
-			Board[height + 1][j] = ' ';
-		}
-
 		int x, y, end_x, end_y;
 		int pair = 0;
 		while (cin >> x >> y >> end_x >> end_y)
 		{
 			pair++;
 			minstep = 100000;
+			memset(mark, false, sizeof(mark));
 			if (x && y && end_x && end_y)
 			{
-				searchPath(x, y, end_x, end_y, 0, -1);
+				Search(x, y, end_x, end_y, 0, -1);//at first, the direction flag do not set
 				cout << "Pair " << pair << ": ";
 				if (minstep == 100000)
 				{
@@ -216,8 +204,9 @@ int main()
 			}
 		}
 		cout << endl;
+	
 	}
-	return 0;
+
 }
 ```
 
