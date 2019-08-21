@@ -1,13 +1,22 @@
 #include <iostream>
 #include <string>
 #include <set>
+#include<stdio.h>
 using namespace std;
 #pragma warning(disable: 4996)
 
 bool stop = false;
+int i =1;
+bool top_output = true;
 
 void printItem(int hierachy, string item) {
-	for (int i = 0; i < hierachy; i++) {
+    if(hierachy == 0 && top_output) {
+        cout<<"DATA SET "<< i << endl;
+        i++;
+        top_output = false;
+    }
+
+    for (int i = 0; i < hierachy; i++) {
 
 		cout << "|        ";
 	}
@@ -15,9 +24,7 @@ void printItem(int hierachy, string item) {
 }
 
 void presentFile(int hierachy, string curDir) {
-
     set<string> Files;
-    printItem(hierachy, curDir);
     string item;
     while (cin>>item)
     {
@@ -26,23 +33,32 @@ void presentFile(int hierachy, string curDir) {
             for(i=Files.begin(); i != Files.end(); i++) {
                 printItem(hierachy, *i);
             }
+            if(item == "*") {
+                top_output=true;
+                cout<<endl;
+                }
             return;
         }
-        if(item[0] == 'f')
+        if(item == "#") {
+            stop = true;
+            break;
+            return;
+        }
+        if(item[0] == 'f') {
             Files.insert(item);
-        else if( item[0] == 'd')
+            //cout<<"get one file"<<endl;
+        }
+        else if( item[0] == 'd') {
             presentFile(hierachy + 1, item);
+            printItem(hierachy, curDir);
+            //cout<<"get one fir"<<endl;
+        }
+        
     }
 }
 int main() {
-    int i =1;
     while(!stop) {
-        cout<<"DATA SET "<< i << endl;
         presentFile(0, "ROOT");
-        cout<<endl;
-        i++;
-        char a = cin.get();
-        char b = cin.peek();
     }
-
+    return 0;
 }
