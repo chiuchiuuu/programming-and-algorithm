@@ -1,0 +1,6 @@
+*.o
+*/build/
+**/build
+*.json
+*/.vscode
+*/.vscode/
