@@ -14,7 +14,8 @@ int main()
         cout<<length2<<endl;
         int nTemp;
         int i,j;
-        for(i=0;i<=length1;i++)
+        for(i=0;i<=length1;i++)\
+        
             maxLen[i][0]=0;
         for (j=0; j<=length2;j++)
             maxLen[0][j]=0;
