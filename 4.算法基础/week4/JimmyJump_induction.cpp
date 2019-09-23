@@ -37,7 +37,7 @@ int main()
             int  j;
             for(j=i+1; j<=n; ++j)
             {   //找到i的左端的下面的那块板子
-                if (platForms[j].Lx<=platForms[j].Rx && platForms[j].Lx >= platForms[j].Lx)
+                if (platForms[i].Lx<=platForms[j].Rx && platForms[i].Lx >= platForms[j].Lx)
                     break;
             }
             if(j>n) 
@@ -45,8 +45,16 @@ int main()
                 if(platForms[i].h > maxHeight)
                     leftMInTime[i] = INFINITE;
                 else
-                    leftMInTime[i] = y+min(leftMInTime[j]+platForms[i].Lx-platForms[j].Lx, 
-                    rightMinTime[j]+platForms[j].Rx-platForms[i].Lx );
+                    leftMInTime[i] = platForms[i].h;
+            }
+            else
+            {
+                    int y = platForms[i].h - platForms[j].h;
+                    if( y > maxHeight)
+                        leftMInTime[i] = INFINITE;
+                    else
+                        leftMInTime[i] = y+min(leftMInTime[j]+platForms[i].Lx-platForms[j].Lx, 
+                                 rightMinTime[j]+platForms[j].Rx-platForms[i].Lx );
             }
             for(j=i+1;j<=n; ++j){
                 //找到i的右端的下面的呢块板子
