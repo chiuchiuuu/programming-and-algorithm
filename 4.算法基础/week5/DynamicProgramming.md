@@ -1,8 +1,8 @@
 ## 最长上升子序列
 
-![1570304544428](E:\programming-and-algorithm\4.算法基础\week5\pic\最长上升子序列1.jpg)
+[![ugvch8.md.png](https://s2.ax1x.com/2019/10/07/ugvch8.md.png)](https://imgchr.com/i/ugvch8)
 
-![1570304665807](E:\programming-and-algorithm\4.算法基础\week5\pic\最长上升子序列.jpg)
+[![ugvyAP.md.png](https://s2.ax1x.com/2019/10/07/ugvyAP.md.png)](https://imgchr.com/i/ugvyAP)
 
 ### 解题思路：
 
@@ -58,11 +58,11 @@ int main(){
 
 ## 方盒游戏
 
-![1570307694315](pic/方盒游戏1.jpg)
+[![ugv29S.md.png](https://s2.ax1x.com/2019/10/07/ugv29S.md.png)](https://imgchr.com/i/ugv29S)
 
-![1570307724114](pic/%E6%96%B9%E7%9B%92%E6%B8%B8%E6%88%8F2.png)
+[![ugv6tf.md.png](https://s2.ax1x.com/2019/10/07/ugv6tf.md.png)](https://imgchr.com/i/ugv6tf)
 
-<img src="pic/%E6%96%B9%E7%9B%92%E6%B8%B8%E6%88%8F3.jpg" alt="1570307858134" style="zoom:50%;" />
+[![ugvr7t.md.png](https://s2.ax1x.com/2019/10/07/ugvr7t.md.png)](https://imgchr.com/i/ugvr7t)
 
 问题可以描述为：click_box(i, j, ex_len)，表示：大块j的已经有了长度为ex_len的大块（该大块可能是在合并的过程中形成的），且j颜色和ex_len相同，在此情况下将i到j以及ex_len都消除所能得到的最高分。
 
