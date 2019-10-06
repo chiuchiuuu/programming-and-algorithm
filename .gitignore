@@ -4,3 +4,6 @@
 *.json
 */.vscode
 */.vscode/
+*/pic/
+*.jpg
+*.png
