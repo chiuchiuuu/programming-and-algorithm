@@ -16,9 +16,10 @@ Dfs(v)
 
 如图是一个城堡的地形图。请编写一个程序，计算城堡一共有多少房间，最大的房间有多大。
 
-![1571043425068](READ.ME.assets/1571043425068.png)
 
-![1571043450400](READ.ME.assets/1571043450400.png)
+
+[![KpTWtI.png](https://s2.ax1x.com/2019/10/15/KpTWtI.png)](https://imgchr.com/i/KpTWtI)
+[![KpTIc8.md.png](https://s2.ax1x.com/2019/10/15/KpTIc8.md.png)](https://imgchr.com/i/KpTIc8)
 
 #### 解题思路：
 
