@@ -1,56 +1,99 @@
-/*
-//农夫知道一头牛的位置，想要抓住它。农夫和牛都位于数轴上，农夫起始位于点N(0<=N<=100000)，牛位于点K(0<=K<=100000)
-农夫有两种移动方式：
-1、从X移动到X-1或X+1，每次移动花费一分钟
-2、从X移动到2*X，每次移动花费一分钟
- 假设牛没有意识到农夫的行动，站在原地不动。农夫最少要花多少时间才能抓住牛？
-*/
-#include <iostream>
-#include <cstring>
-#include <queue>
+#include<iostream>
+#include<queue>
 using namespace std;
-int N, K;
-const int MAXN = 100000;
-int visited[MAXN + 10]; //判重标记，为true表示该点已经扩展过了
-struct Step
+
+const int board_size = 4;
+const int direction_num = 4;
+struct Piece
 {
-    int x;     //位置
-    int steps; //到达x需要的步数
-    Step(int xx, int ss) : x(xx), steps(ss) {}
+    int status;//状态值
+    int steps; //步数
+    Piece(int st, int step):status(st),steps(step){}
 };
-queue<Step> q; //队列，即open表
-int main()
+int direction[direction_num][2] = {
+    {-1,0}, {0,1},{1,0},{0,-1}
+};
+int pos[board_size *board_size]; //16种反转可能性
+bool marker[1<<(board_size*board_size)];
+
+bool inBoard(int x, int y)
 {
-    cin >> N >> K;
-    memset(visited, 0, sizeof(visited));
-    q.push(Step(N, 0)); //把起始位置放入Open表
+    if(x>=0 && x<board_size && y>=0 && y<board_size)
+        return true;
+    else
+        return false;
+}
+void FlipInitialize()
+{
+    for (int i = 0; i < board_size; i++)
+    {
+        for(int j = 0; j< board_size; j++)
+        {
+            // i*size+j  即为编号
+            int value = 1 << (i * board_size + j);
+            for(int k = 0; k<direction_num; k++)
+            {
+                int next_x = i + direction[k][0];
+                int next_y = j + direction[k][1];
+                if(inBoard(next_x, next_y))
+                    value += 1 << (next_x *board_size + next_y);
+            }
+            pos[i * board_size + j] = value;
+        }
+    }
+    
+}
+int BFS(int value)
+{
+    queue<Piece> q;
+    Piece s = Piece(value, 0);
+    q.push(s);
+    marker[s.status] = true;
     while (!q.empty())
     {
-        Step s = q.front(); //拿出Open表中第一个元素
-        if (s.x == K)
-        { //找到目标
-            cout << s.steps << endl;
-            return 0;
-        }
-        else
+        Piece cur = q.front();
+        q.pop();
+        //盘面全黑或者全白(2^16 -1)时结束，并返回步数
+        if(cur.status == 0 || cur.status == (1<<(board_size*board_size))-1)
         {
-            if (s.x - 1 >= 0 && !visited[s.x - 1])
-            {
-                q.push(Step(s.x - 1, s.steps + 1));
-                visited[s.x - 1] = 1;
-            }
-            if (s.x + 1 <= MAXN && !visited[s.x + 1])
-            {
-                q.push(Step(s.x + 1, s.steps + 1));
-                visited[s.x + 1] = 1;
-            }
-            if (s.x * 2 <= MAXN && !visited[s.x * 2])
-            {
-                q.push(Step(s.x * 2, s.steps + !));
-                visited[s.x * 2] = 1;
-            }
-            q.pop();
+            return cur.steps;
         }
+        //搜索16个位置
+        for(int i = 0; i< board_size*board_size; ++i)
+        {
+            //通过异或运算得到翻转后的状态
+            Piece next = Piece(cur.status ^ pos[i], cur.steps+1);
+            if(!marker[next.status])
+            {
+                q.push(next);
+                marker[next.status] = true;
+            }
+
+        }
+    }
+    return -1; //无法到达目标状态 返回-1
+}
+int main()
+{
+    FlipInitialize();
+    char str[5];
+    int value = 0;
+    for(int i=0; i<board_size; i++)
+    {
+         cin>>str;
+         for(int j=0; j<board_size; j++)
+         {
+             if(str[j]== 'w')
+                value += 1<<(i*board_size + j);
+                  // 加上 1<<(编号) 即可将此位置设置为1
+         }
+    }
+    int ans = BFS(value);
+    if(ans >= 0)
+        cout<<ans<<endl;
+    else
+    {
+        cout<<"Impossible"<<endl;
     }
     return 0;
 }
