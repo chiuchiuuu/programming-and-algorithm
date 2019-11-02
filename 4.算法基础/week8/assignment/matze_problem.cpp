@@ -1,79 +1,92 @@
-#include <iostream>
-#include <queue>
-#include <string.h>
+#include<iostream>
+#include<queue>
+#include<cstdio>
+#include<string>
+#include<cstdio>
 using namespace std;
 
-bool is_wall[5][5];
-int a[5][5];
-int dx[4] = {0, 1, 0, -1};
-int dy[4] = {1, 0, -1, 0};
+const int board_size = 5;
+const int direction_num = 4;
 
-struct Node
+struct Piece
 {
-    int x;
-    int y;
-    int s;
-    short father[30];
+	int x;
+	int y;
+	//Piece(int xx, int yy): x(xx), y(yy){}
 };
 
-bool Judge_Invalid(int x, int y)
+Piece father[board_size][board_size];
+// father[x][y].x 存储的是最短路径的坐标为(x,y)点的下一个坐标x
+ int direction[direction_num][2] = {
+	{-1, 0}, {0, 1}, {1, 0}, {0,-1}
+};
+
+int marker[board_size][board_size];
+int board[board_size][board_size];
+
+bool InBoard(int x, int y)
 {
-    if(x<0 || x >=5 || y <0 || y>=5)
-        return true;
-    if(is_wall[x][y])
-        return true;
-    if(a[x][y] ==1)
-        return true;
-    return false;
+	if (x >= 0 && x < board_size && y >= 0 && y < board_size)
+		return true;
+	else
+		return false;
 }
-Node Bfs()
+
+void BFS()
 {
-    queue<Node> q;
-    Node cur, next;
-    cur.x = 0;
-    cur.y = 0;
-    cur.s = 0;
-    is_wall[cur.x][cur.y] = true;
-    q.push(cur);
-    while (!(q.empty()))
-    {
-        cur = q.front();
-        q.pop();
-        if(cur.x == 4 && cur.y ==4)
-            return cur;
-        int i, nx, ny;
-        for(i=0; i<4; i++)
-        {
-            nx = cur.x + dx[i];
-            ny = cur.y + dy[i];
-            if(Judge_Invalid(nx,ny))
-                continue;
-            next = cur;
-            next.x = nx;
-            next.y = ny;
-            next.s = cur.s + 1;
-            next.father[cur.s] = i;
-            q.push(next);
-        }
-    }
-    return cur;
+	queue<Piece>q;
+	Piece start;
+	start.x = 4;
+	start.y = 4;
+	marker[4][4] = 1;
+	q.push(start);
+	while (!q.empty())
+	{
+		Piece current = q.front();
+		q.pop();
+		if (current.x == 0 && current.y == 0)
+			return;
+		for (int i = 0; i < direction_num; i++)
+		{
+			int next_x = current.x + direction[i][0];
+			int next_y = current.y + direction[i][1];
+			if (InBoard(next_x, next_y) && !board[next_x][next_y] && !marker[next_x][next_y])
+			{
+				Piece next;
+				next.x = next_x;
+				next.y = next_y;
+				father[next_x][next_y].x = current.x;
+				father[next_x][next_y].y = current.y;
+				marker[next_x][next_y] = 1;
+				q.push(next);
+				//cout <<"the current:" <<current.x<<" "<< current.y <<"searched: "<<next_x << "  " << next_y << endl;
+			}
+		}
+	}
+}
+void print_answer()
+{
+	int x = 0, y = 0;
+	while (!((x==board_size-1) && (y == board_size-1)))
+	{
+		cout << '(' << x << ','<<' '  << y << ')' << endl;
+		int temp_x, temp_y;
+		temp_x = father[x][y].x;
+		temp_y = father[x][y].y;
+
+		x = temp_x;
+		y = temp_y;
+
+	}
+	cout << '(' << x << ','<<' ' << y << ')' << endl;
 }
 int main()
 {
-     int i,j;
-    for(i=0;i<5;i++){   //读入迷宫
-        for(j=0;j<5;j++){
-            scanf("%d",&a[i][j]);
-        }
-    }
-    memset(is_wall,0,sizeof(is_wall));
-    Node ans = Bfs();
-    int x,y;
-    x = 0,y = 0;
-    for(i=0;i<=ans.s;i++){
-         printf("(%d, %d)\n",x,y);
-         x+=dx[ans.l[i]];
-         y+=dy[ans.l[i]];
-    }        
-    return 0;
+	//freopen("E:\\text.txt", "r", stdin);
+	for (int i = 0; i < board_size; i++)
+		for (int j = 0; j < board_size; j++)
+			cin >> board[i][j];
+	BFS();
+	print_answer();
+	return 0;
 }
