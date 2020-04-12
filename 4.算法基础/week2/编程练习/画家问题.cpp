@@ -104,7 +104,7 @@ int main()
 {
 	int ncase;
 	cin >> ncase;
-	
+
 	for (int i = 0; i < ncase; i++)
 	{
 		cin >> width;

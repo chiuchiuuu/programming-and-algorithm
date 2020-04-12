@@ -1,4 +1,4 @@
-# Week2
+﻿# Week2
 
 ## 函数指针
 
@@ -8,9 +8,11 @@
 类型名 (*指针变量名)(参数列表)
 ```
 
+类型名是指函数的返回值类型
+
 示例
 
-```c++
+```cpp
 void PrintMin(int a, int b)
 {
 	if(a < b)
@@ -37,7 +39,7 @@ int main()
 
 函数原型：
 
-```c++
+```cpp
 void qsort(void *base, int nelem, unsigned int width, int (*pfCompare)(const void *, const void *));
 ```
 
@@ -48,7 +50,7 @@ void qsort(void *base, int nelem, unsigned int width, int (*pfCompare)(const voi
 
 比较函数原型：
 
-```c++
+```cpp
 int 比较函数名(const void *elem1, const void *elem2);
 ```
 
@@ -58,14 +60,14 @@ int 比较函数名(const void *elem1, const void *elem2);
 
 示例：
 
-```c++
+```cpp
 #include <iostream>
 using namespace std;
 
 int MyCompare(const void * elem1, const void * elem2)
 {
 	unsigned int *p1, *p2;
-  	p1 = (unsigned int *)elem1;
+  	p1 = (unsigned int *)elem1;//* elem1非法，因为elem1是void *类型，编译器无法确定其占用的字节数
   	p2 = (unsigned int *)elem2;
   	return (*p1 % 10) - (*p2 % 10)
 }
@@ -88,14 +90,16 @@ int main()
 
 命令行方式运行程序
 
-```c++
+```cpp
 int main(int argc, char *argv[])
 {
 	...
 }
 ```
 
+argc: 代表程序启动时，命令函参数的个数。C/C++规定，可执行程序本身的文件名，也算一个命令函参数，因此，argc的值至少是一。
 
+argv: 指针数组，其中的每个元素都是一个char* 类型的指针，该指针指向一个字符串，这个字符串里就存放着命令行参数。
 
 ## 位运算
 
@@ -133,7 +137,7 @@ int main(int argc, char *argv[])
 
 例：给定`int a, n` 求第a的第n位
 
-```c++
+```cpp
 (a >> n) & 1
 (a & (1 << n)) >> n  // (n != 31)
 ```
@@ -144,10 +148,11 @@ int main(int argc, char *argv[])
 
 定义
 
-```c++
+```cpp
 类型名 &引用名 = 某变量名
 ```
 
+- 某个变量，等价于这个变量，相当于这个变量的别名
 - 一定要初始化，初始化后不能改变
 - 只能引用变量，不能引用常量和表达式
 
@@ -155,7 +160,7 @@ int main(int argc, char *argv[])
 
 - 引用做参数：交换
 
-```c++
+```cpp
 void swap(int &a, int &b)
 {
 	int tmp = a;
@@ -166,7 +171,7 @@ void swap(int &a, int &b)
 
 - 引用做函数返回值
 
-```c++
+```cpp
 int n = 4;
 int &SetValue()
 {
@@ -182,7 +187,7 @@ int main()
 
 - 常引用
 
-```c++
+```cpp
 int n = 100;
 const int &r = n;
 r = 200; // error
@@ -198,7 +203,8 @@ r = 200; // error
 
 - 不可通过常量指针修改其指向的内容
 - 常量指针的指向可以修改
-- 不能把常量指针赋值给非常量指针，但可以强制类型转换
+- 不能把常量指针赋值给非常量指针，但可以强制类型转换，也可以把非常量指针赋值给常量指针
+- 相对于define，更推荐const，因为const有类型检查
 
 
 
@@ -208,11 +214,19 @@ r = 200; // error
 
 - 分配
   - 分配一个变量：`Pointer = new Type;`
+  
+    Type是任意类型名，pointer是T*的指针。动态分配出一块大小为sizeof(Type)的内存空间，并把该内存空间的起始地址赋值给Pointer
+  
   - 分配一个数组：`Pointer = new Type[Number]`
+  
 - `new`的返回类型都是相应类型的**指针**
+
 - 释放（不能释放多次）
+  
   - `delete Pointer;`
   - `delete [] Pointer;`
+  
+  注意Pointer必须指向new出来的动态空间。
 
 
 
@@ -225,7 +239,7 @@ r = 200; // error
 
 定义，关键字 `inline`
 
-```c++
+```cpp
 inline int Max(int a, int b);
 ```
 
@@ -237,7 +251,7 @@ inline int Max(int a, int b);
 
 一个或多个函数，名字相同，然而参数个数或参数类型不相同，这叫做函数的重载。 （参数相同，返回值不同不算重载）
 
-```c++
+```cpp
 int Max(double f1, double f2);
 int Max(int n1, int n2);
 int Max(int n1, int n2, int n3);
@@ -307,7 +321,7 @@ int Max(int n1, int n2, int n3);
 
 ### 访问类的成员变量和成员函数
 
-```c++
+```cpp
 对象名.成员名
 ```
 
@@ -315,13 +329,13 @@ int Max(int n1, int n2, int n3);
 指针->成员名
 ```
 
-```c++
+```cpp
 引用名.成员名
 ```
 
 ### 类的成员函数的另一种写法
 
-```c++
+```cpp
 type class::function(parameter)
 {
   	...

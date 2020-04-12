@@ -1,4 +1,4 @@
-# Week4
+﻿# Week4
 
 ## 运算符重载
 
@@ -10,20 +10,29 @@
 
 目的：
 
-- 扩展C++中提供的运算符的适用范围, 以用于类所表示的抽象数据类型
+- 扩展cpp中提供的运算符的适用范围, 以用于类所表示的抽象数据类型
 
 运算符重载的实质是函数重载，参数个数为运算符目数
 
-```c++
+```cpp
 返回值类型 operator 运算符(形参表)
 {
 	…… 
 }
 ```
 
+在程序编译时：
+
+- 把含运算符的表达式 -> 对运算符函数的调用
+- 把运算符的操作数 -> 运算符函数的参数
+- 运算符多次重载时，根据实参类型决定调用哪个运算符函数
+- 运算符可以被重载为普通函数，也可以被重载为类的成员函数
+
 例如复数相加：
 
-```c++
+重载为普通函数，参数个数为运算符目数
+
+```cpp
 Complex operator+(const Complex &a, const Complex &b)
 {
 	return Complex(a.real + b.real, a.imag + b.imag)
@@ -32,7 +41,7 @@ Complex operator+(const Complex &a, const Complex &b)
 
 运算符重载为成员函数，参数个数为运算符目数减一
 
-```c++
+```cpp
 Complex operator+(const Complex &operand2);
 // x = y + z
 // 等价于 x = y.operator+(z)
@@ -49,15 +58,15 @@ Complex operator+(const Complex &operand2);
 - 把一个 `int` 类型变量 赋值给一个 Complex对象
 - 把一个 `char*` 类型的字符串赋值给一个 字符串对象
 
-注意：赋值运算符 `=` 只能重载为成员函数！
+注意：赋值运算符 `=` 只能重载为**成员函数**！
 
 例子：字符串赋值
 
-```c++
+```cpp
 class String
 {
 private:
-	char *str;
+	char *str;//指向动态分配的存储空间
 public:
 	String() :str(NULL) {}
 	const char *get_str() { return str; }
@@ -66,14 +75,14 @@ public:
 };
 
 char* String::operator=(const char *s)
-{
+{//重载= -> obj="Hello"能够成立。调用时，把"Hello"的首地址传递进来
 	if (str)
 	{
 		delete[] str;
 	}
 	if (s)
 	{
-		str = new char[strlen(s) + 1];
+		str = new char[strlen(s) + 1];//+1是为了存放“/0”
 		strcpy(str, s);
 	}
 	else
@@ -101,18 +110,20 @@ String::~String()
 
 浅复制是一种逐字节的复制。在复制内容包含指针时会产生问题。
 
-```c++
+```cpp
 MyString S1, S2;
 S1 = "this";
 S2 = "that";
 S2 = S1;
 ```
 
-这样一个简单的程序会导致S1和S2的`char *` 变量指向同一块内存，会造成内存垃圾，以及重复`delete`的隐患。
+这样一个简单的程序会导致S1和S2的`char *` 变量指向同一块内存，会造成**内存垃圾**，以及重复`delete`的隐患。
 
-利用赋值运算符重载可以实现深复制：将一个对象中指针变量指向的内容，复制到另一个对象中指针成员对象指向的地方。
+[![ZIvBJU.png](https://s2.ax1x.com/2019/07/15/ZIvBJU.png)](https://imgchr.com/i/ZIvBJU)
 
-```c++
+利用赋值运算符重载可以实现**深复制**：将一个对象中指针变量指向的内容，复制到另一个对象中指针成员对象指向的地方。
+
+```cpp
 String& operator=(const String &s)
 {
 	if (str == s.str)  // 针对自身赋值的情况
@@ -140,7 +151,7 @@ String& operator=(const String &s)
 
 赋值运算符重载时，返回值设为其所作用的对象的引用，是符合赋值运算符使用习惯的做法。
 
-```c++
+```cpp
 a = b = c;  // return void 会导致a赋值失败
 (a = b) = c; // return string 会导致第二个赋值无意义
 ```
@@ -156,7 +167,7 @@ a = b = c;  // return void 会导致a赋值失败
 - 成员函数不能满足使用要求
 - 普通函数又不能访问类的私有成员 
 
-```c++
+```cpp
 class Complex 
 { 
 	double real, imag; 
@@ -171,7 +182,7 @@ public:
 
 ## 运算符重载示例：长度可变的整形数组
 
-```c++
+```cpp
 #include <iostream>
 using namespace std;
 
@@ -303,7 +314,7 @@ int main() {  //要编写可变长整型数组类，使之能如下使用：
 
 `cout` 是在 `iostream` 定义的 `ostream` 类的对象。
 
-```c++
+```cpp
 // 返回引用实现连续输出
 ostream & ostream::operator<<(int n)
 {
@@ -312,19 +323,20 @@ ostream & ostream::operator<<(int n)
 }
 ```
 
-定制自己的 `cout`， 只能重载成全局函数
+由于相应的函数已经在头文件里定义好了，因而定制自己的 `cout`， 只能重载成全局函数。此时，操作数的数目等于函数的参数个数。
 
-```c++
+```cpp
 ostream & operator<<(ostream &o, const CStudent &s)
+//此处，CStudent的引用和CStudent都能实现功能，我们选择使用引用的原因在于，我们不需要形参对象，而形参对象的生成需要调用复制构造函数，产生开销
 {
-	o << s.nAge;
-  	return o;
+	o << s.nAge; 
+  	return o; //此时返回值为ostream,当调用cout<<s时，返回值为ostream &cout
 }
 ```
 
 示例：输入输出复数
 
-```c++
+```cpp
 #include <iostream>
 #include <string>
 #include <cstdlib>
@@ -349,7 +361,7 @@ ostream & operator<<(ostream &os, const Complex &c)
 istream & operator>>(istream &is, Complex &c)
 {
 	string s;
-	is >> s;
+	is >> s;//将a+bi作为字符串读入，中间不能有空格
 	int pos = s.find("+", 0);
 	string sTmp = s.substr(0, pos);
 	c.real = atof(sTmp.c_str());
@@ -384,7 +396,7 @@ int main() {
 
 ### 后置运算符作为二元运算符重载 
 
-- 多写一个参数, 无具体意义 
+- 多写一个参数, 只是标记重载的是后置运算符，无具体意义 
 - 重载为成员函数：
   - `T operator++(int); `
   - `T operator--(int); `
@@ -393,7 +405,7 @@ int main() {
   - `T operator--(T &, int); `
 - `obj++`, `obj.operator++(0)`, `operator++(obj,0)` 都调用上函数
 
-```c++
+```cpp
 #include <iostream>
 #include <string>
 #include <cstdlib>
@@ -462,7 +474,7 @@ int main() {
 
 ### 运算符重载的注意事项
 
-- C++不允许定义新的运算符 
+- cpp不允许定义新的运算符 
 - 重载后运算符的含义应该符合日常习惯 
 - 运算符重载不改变运算符的优先级 
 - 以下运算符不能被重载： `.`, `.*`, `::`, `?:`, `sizeof` 

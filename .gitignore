@@ -1,0 +1,12 @@
+*.o
+*/build/
+**/build
+*.json
+*/.vscode
+*/.vscode/
+*/pic/
+*.jpg
+*.png
+*/.vs
+*/.vs/
+.idea/
