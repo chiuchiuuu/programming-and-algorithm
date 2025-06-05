@@ -4,7 +4,7 @@ class Number {
 public:
 	int num;
 	Number(int n = 0) : num(n) {}
-	// ÔÚ´Ë´¦²¹³äÄãµÄ´úÂë
+	// åœ¨æ­¤å¤„è¡¥å……ä½ çš„ä»£ç 
 	Number operator*(Number &n)
 	{
 		return Number(num*n.num);

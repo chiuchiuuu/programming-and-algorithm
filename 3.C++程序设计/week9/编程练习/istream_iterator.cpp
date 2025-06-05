@@ -2,7 +2,7 @@
 #include <string>
 using namespace std;
 
-// ÔÚ´Ë´¦²¹³äÄãµÄ´úÂë
+// åœ¨æ­¤å¤„è¡¥å……ä½ çš„ä»£ç 
 template<class T>
 class CMyistream_iterator
 {
@@ -28,13 +28,13 @@ int main()
 {
 	CMyistream_iterator<int> inputInt(cin);
 	int n1, n2, n3;
-	n1 = *inputInt; //¶ÁÈë n1
+	n1 = *inputInt; //è¯»å…¥ n1
 	int tmp = *inputInt;
 	cout << tmp << endl;
 	inputInt++;
-	n2 = *inputInt; //¶ÁÈë n2
+	n2 = *inputInt; //è¯»å…¥ n2
 	inputInt++;
-	n3 = *inputInt; //¶ÁÈë n3
+	n3 = *inputInt; //è¯»å…¥ n3
 	cout << n1 << "," << n2 << "," << n3 << endl;
 	CMyistream_iterator<string> inputStr(cin);
 	string s1, s2;

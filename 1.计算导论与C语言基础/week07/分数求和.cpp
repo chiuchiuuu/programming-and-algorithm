@@ -7,7 +7,7 @@ int main()
 	int n = 0;
 	cin >> n;
 
-	int sumn = 0, sumd = 1; // 储存结果 sum/sumd
+	int sumn = 0, sumd = 1; // 鍌ㄥ瓨缁撴灉 sum/sumd
 	while (n--)
 	{
 		int num, deno;
@@ -25,7 +25,7 @@ int main()
 		a = b%a;
 		b = c;
 	}
-	int gcd = b; // 最大公约数
+	int gcd = b; // 鏈�澶у叕绾︽暟
 
 	sumd /= gcd;
 	sumn /= gcd;

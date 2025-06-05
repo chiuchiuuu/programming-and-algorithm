@@ -9,7 +9,7 @@ int main()
 		bool b = (best == 4);
 		bool c = (best != 3);
 		bool d = !b;
-		// Ö»ÓĞÒ»¸ö×¨¼ÒËµ¶Ô
+		// åªæœ‰ä¸€ä¸ªä¸“å®¶è¯´å¯¹
 		if (a + b + c + d == 1)
 		{
 			cout << best << endl;

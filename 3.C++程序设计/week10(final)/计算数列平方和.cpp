@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
 
-// ÔÚ´Ë´¦²¹³äÄãµÄ´úÂë
+// åœ¨æ­¤å¤„è¡¥å……ä½ çš„ä»£ç 
 int sum(const int *array, int num, int(*func)(int n))
 {
 	int sum = 0;

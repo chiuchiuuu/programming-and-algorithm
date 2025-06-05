@@ -6,15 +6,15 @@ using namespace std;
 class BigInt
 {
 private:
-	string num;			// ÊıÖµ
-	char sign;			// Õı¸º
+	string num;			// æ•°å€¼
+	char sign;			// æ­£è´Ÿ
 public:
-	BigInt(string n = "0");					// ¹¹Ôìº¯Êı£¬È±Ê¡Îª0
-	BigInt operator+(const BigInt &bi);		// ´óÕûÊı¼Ó·¨
-	BigInt operator-(const BigInt &bi);		// ´óÕûÊı¼õ·¨
-	BigInt operator*(const BigInt &bi);		// ´óÕûÊı³Ë·¨
-	BigInt operator/(const BigInt &bi);		// ´óÕûÊı³ı·¨
-	friend ostream& operator<<(ostream &o, const BigInt &b);		// ´óÕûÊıÊä³ö
+	BigInt(string n = "0");					// æ„é€ å‡½æ•°ï¼Œç¼ºçœä¸º0
+	BigInt operator+(const BigInt &bi);		// å¤§æ•´æ•°åŠ æ³•
+	BigInt operator-(const BigInt &bi);		// å¤§æ•´æ•°å‡æ³•
+	BigInt operator*(const BigInt &bi);		// å¤§æ•´æ•°ä¹˜æ³•
+	BigInt operator/(const BigInt &bi);		// å¤§æ•´æ•°é™¤æ³•
+	friend ostream& operator<<(ostream &o, const BigInt &b);		// å¤§æ•´æ•°è¾“å‡º
 };
 
 BigInt::BigInt(string n)

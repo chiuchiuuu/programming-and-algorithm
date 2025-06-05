@@ -5,7 +5,7 @@ int main()
 {
 	int n = 0, k = 0;
 	cin >> n >> k;
-	// û�и�n�ķ�Χ�����Զ�̬��������
+	// 没有给n的范围，所以动态创建数组
 	int *a = new int[n];
 
 	for (int i = 0; i < n; i++)
@@ -13,7 +13,7 @@ int main()
 
 	for (int i = 0; i < n; i++)
 	{
-		// �ҵ���a[i]��ĸ�������Ϊk-1��a[i]�ǵ�k�����
+		// 找到比a[i]大的个数，若为k-1则a[i]是第k大的数
 		int bigger = 0;
 		for (int j = 0; j < n; j++)
 		{

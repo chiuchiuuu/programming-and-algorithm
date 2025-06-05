@@ -19,7 +19,7 @@ int main()
 	return 0;
 }
 
-/* ԭ�汾
+/* 原版本
 #include <iostream>
 using namespace std;
 

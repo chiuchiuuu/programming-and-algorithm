@@ -6,8 +6,8 @@ int main()
 	int n = 0;
 	double x = 0, y = 0;
 	cin >> n >> x >> y;
-	int ans = n - y / x;    // ×¢ÒâÕâÀïn±»Ç¿ÖÆÀàĞÍ×ª»¯Îªdouble£¡
-	ans = ans < 0 ? 0 : ans;  // Ê£ÓàÆ»¹û¸öÊı×îĞ¡Îª0
+	int ans = n - y / x;    // æ³¨æ„è¿™é‡Œnè¢«å¼ºåˆ¶ç±»å‹è½¬åŒ–ä¸ºdoubleï¼
+	ans = ans < 0 ? 0 : ans;  // å‰©ä½™è‹¹æœä¸ªæ•°æœ€å°ä¸º0
 	cout << ans << endl;
 	return 0;
 }

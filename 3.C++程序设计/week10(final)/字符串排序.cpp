@@ -27,7 +27,7 @@ public:
 	}
 };
 
-// ╘┌┤╦┤ж▓╣│ф─у╡─┤·┬ы
+// хЬицндхдДшбехЕЕф╜ачЪДф╗гчаБ
 bool operator<(const A &a1, const A &a2)
 {
 	return a1.get_size() < a2.get_size();

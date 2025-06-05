@@ -4,7 +4,7 @@ class Number {
 public:
 	int num;
 	Number(int n) : num(n) { }
-	// ÔÚ´Ë´¦²¹³äÄãµÄ´úÂë
+	// åœ¨æ­¤å¤„è¡¥å……ä½ çš„ä»£ç 
 	int& value()
 	{
 		return num;

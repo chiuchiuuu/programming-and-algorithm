@@ -33,7 +33,7 @@ int main()
 	}
 	vector<Point>::iterator i, j;
 	int nTotalNum = 0;
-	// ÔÚ´Ë´¦²¹³äÄãµÄ´úÂë
+	// åœ¨æ­¤å¤„è¡¥å……ä½ çš„ä»£ç 
 	sort(v.begin(), v.end());
 	for (i = v.begin(); i < v.end() - 1; i++)
 	{
