@@ -8,7 +8,7 @@ int main()
 	cin >> h >> r;
 	float pi = 3.14159;
 	double v = pi * r * r * h;
-	int ans = ceil(20000 / v);  // 向上取整
+	int ans = ceil(20000 / v);  // 鍚戜笂鍙栨暣
 	cout << ans << endl;
 	return 0;
 }

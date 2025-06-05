@@ -17,7 +17,7 @@ int main()
 	string line;
 	while (getline(cin, line) && line != "")
 	{
-		line += ' ';  // ��ĩ�ӿո񷽱��и�
+		line += ' ';  // 行末加空格方便切割
 		int pos;
 		int sign = 1;
 		int val = 0;

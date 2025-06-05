@@ -37,7 +37,7 @@ class City
 {
 protected:
 	int id;
-	string flag;  // 0£ºÎŞÆìÖÄ£¬1£ººìÆì£¬2£ºÀ¶Æì
+	string flag;  // 0ï¼šæ— æ——å¸œï¼Œ1ï¼šçº¢æ——ï¼Œ2ï¼šè“æ——
 	int LifeValue;
 	City *next;
 	City *prior;
@@ -253,10 +253,10 @@ void Warrior::bomb(Warrior *enemy)
 		bool redFirst = pCity->get_flag() == "red" || (pCity->get_flag() == "None" && pCity->id % 2 == 1);
 		if (redFirst && hq->alliance == "red" || !redFirst && hq->alliance == "blue")
 		{
-			// ÎÒ·½ÏÈ³ö»÷£¬±»·´É±
+			// æˆ‘æ–¹å…ˆå‡ºå‡»ï¼Œè¢«åæ€
 			if (enemy->getClasses() != "ninja" && attack + weapon[0] < enemy->strength && strength <= enemy->attack / 2 + enemy->weapon[0])
 			{
-				// Òı±¬Õ¨µ¯
+				// å¼•çˆ†ç‚¸å¼¹
 				strength = 0;
 				enemy->strength = 0;
 				pCity->redWarrior = NULL;
@@ -267,7 +267,7 @@ void Warrior::bomb(Warrior *enemy)
 		}
 		else if (strength <= enemy->attack + enemy->weapon[0])
 		{
-			// Òı±¬Õ¨µ¯
+			// å¼•çˆ†ç‚¸å¼¹
 			strength = 0;
 			enemy->strength = 0;
 			pCity->redWarrior = NULL;
@@ -379,7 +379,7 @@ void Warrior::ReportWeapon()
 class Dragon : public Warrior
 {
 private:
-	double morale; // Ê¿Æø
+	double morale; // å£«æ°”
 public:
 	Dragon(Headquarter *hq, int id, int strength, int atk, double m, int cid = 0) :Warrior(hq, id, strength, atk, cid), morale(m)
 	{
@@ -624,12 +624,12 @@ void Headquarter::award(Warrior *w)
 
 void City::Fight()
 {
-	// À¶ÎäÊ¿±»ÉäËÀ
+	// è“æ­¦å£«è¢«å°„æ­»
 	if (!redWarrior && blueWarrior && blueWarrior->getStrength() == 0)
 	{
 		blueWarrior = NULL;
 	}
-	// ºìÎäÊ¿±»ÉäËÀ
+	// çº¢æ­¦å£«è¢«å°„æ­»
 	if (redWarrior && !blueWarrior && redWarrior->getStrength() == 0)
 	{
 		redWarrior = NULL;
@@ -712,7 +712,7 @@ int main()
 		blueWin = false;
 		redWin = false;
 
-		// ÊäÈëÊı¾İ
+		// è¾“å…¥æ•°æ®
 
 		cin >> initialLifeValue >> numOfCity >> arrow_atk >> loyalty_loss >> TOTALTIME;
 		for (int j = 0; j < 5; j++)
@@ -724,7 +724,7 @@ int main()
 			cin >> initialAttack[j];
 		}
 
-		// ×Ü²¿ºÍ³ÇÊĞ³õÊ¼»¯
+		// æ€»éƒ¨å’ŒåŸå¸‚åˆå§‹åŒ–
 
 		City* city[22];
 		for (int j = 1; j <= numOfCity; j++)
@@ -743,7 +743,7 @@ int main()
 		blue.init(initialLifeValue, blueOrder);
 
 
-		// ²âÊÔ¿ªÊ¼
+		// æµ‹è¯•å¼€å§‹
 		cout << "Case " << i << ":" << endl;
 		while (true)
 		{

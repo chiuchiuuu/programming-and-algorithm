@@ -4,7 +4,7 @@
 #include <iostream>
 using namespace std;
 
-// ÔÚ´Ë´¦²¹³äÄãµÄ´úÂë
+// åœ¨æ­¤å¤„è¡¥å……ä½ çš„ä»£ç 
 class MyString : public string
 {
 public:
@@ -56,9 +56,9 @@ int main()
 	qsort(SArray, 4, sizeof(MyString), CompareString);
 	for (int i = 0; i < 4; i++)
 		cout << SArray[i] << endl;
-	//s1µÄ´ÓÏÂ±ê0¿ªÊ¼³¤¶ÈÎª4µÄ×Ó´®
+	//s1çš„ä»ä¸‹æ ‡0å¼€å§‹é•¿åº¦ä¸º4çš„å­ä¸²
 	cout << s1(0, 4) << endl;
-	//s1µÄ´ÓÏÂ±ê5¿ªÊ¼³¤¶ÈÎª10µÄ×Ó´®
+	//s1çš„ä»ä¸‹æ ‡5å¼€å§‹é•¿åº¦ä¸º10çš„å­ä¸²
 	cout << s1(5, 10) << endl;
 	return 0;
 }

@@ -4,7 +4,7 @@
 #include <algorithm>
 using namespace std;
 
-// ÔÚ´Ë´¦²¹³äÄãµÄ´úÂë
+// åœ¨æ­¤å¤„è¡¥å……ä½ çš„ä»£ç 
 class A
 {
 public:

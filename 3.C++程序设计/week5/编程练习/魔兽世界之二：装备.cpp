@@ -83,7 +83,7 @@ public:
 class Dragon : public Warrior
 {
 private:
-	double morale; // Ê¿Æø
+	double morale; // å£«æ°”
 public:
 	Dragon(Headquarter *hq, int id, int strength, int atk, double m, int cid = 0) :Warrior(hq, id, strength, atk, cid), morale(m)
 	{ 

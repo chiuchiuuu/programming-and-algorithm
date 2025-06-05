@@ -5,7 +5,7 @@
 #include <algorithm>
 using namespace std;
 
-// ÔÚ´Ë´¦²¹³äÄãµÄ´úÂë
+// åœ¨æ­¤å¤„è¡¥å……ä½ çš„ä»£ç 
 #include <functional>
 template<class Key, class Val, class Pred = greater<Key> >
 class MyMultimap :public multimap<Key, Val, Pred>
@@ -50,9 +50,9 @@ int main()
 	MyMultimap<string, int> mp;
 	for (int i = 0; i<5; ++i)
 		mp.insert(make_pair(s[i].name, s[i].score));
-	Print(mp.begin(), mp.end()); //°´ĞÕÃû´Ó´óµ½Ğ¡Êä³ö
+	Print(mp.begin(), mp.end()); //æŒ‰å§“åä»å¤§åˆ°å°è¾“å‡º
 
-	mp.Set("Tom", 78); //°ÑËùÓĞÃûÎª"Tom"µÄÑ§ÉúµÄ³É¼¨¶¼ÉèÖÃÎª78
+	mp.Set("Tom", 78); //æŠŠæ‰€æœ‰åä¸º"Tom"çš„å­¦ç”Ÿçš„æˆç»©éƒ½è®¾ç½®ä¸º78
 	Print(mp.begin(), mp.end());
 
 
@@ -60,8 +60,8 @@ int main()
 	for (int i = 0; i<5; ++i)
 		mp2.insert(make_pair(s[i].score, s[i].name));
 
-	Print(mp2.begin(), mp2.end()); //°´³É¼¨´ÓĞ¡µ½´óÊä³ö
-	mp2.Set(70, "Error");          //°ÑËùÓĞ³É¼¨Îª70µÄÑ§Éú£¬Ãû×Ö¶¼¸ÄÎª"Error"
+	Print(mp2.begin(), mp2.end()); //æŒ‰æˆç»©ä»å°åˆ°å¤§è¾“å‡º
+	mp2.Set(70, "Error");          //æŠŠæ‰€æœ‰æˆç»©ä¸º70çš„å­¦ç”Ÿï¼Œåå­—éƒ½æ”¹ä¸º"Error"
 	Print(mp2.begin(), mp2.end());
 	cout << "******" << endl;
 

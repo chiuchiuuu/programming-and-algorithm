@@ -19,7 +19,7 @@ int tic[10] = { 0 };
 int minStep = 1000000;
 int minTic[10] = { 0 };
 
-// ¸ù¾İ tic[1] tic[2] tic[3] ¸üĞÂÆäÓàÖµ
+// æ ¹æ® tic[1] tic[2] tic[3] æ›´æ–°å…¶ä½™å€¼
 void update()
 {
 	tic[4] = (4 - (Clock[1] + tic[1] + tic[2]) % 4) % 4;
